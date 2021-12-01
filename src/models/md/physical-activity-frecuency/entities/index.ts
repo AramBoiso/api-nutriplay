@@ -1,0 +1,1 @@
+export * from './physical_activity_frecuency.entity';

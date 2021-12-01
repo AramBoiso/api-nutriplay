@@ -2,14 +2,14 @@ import { BeforeInsert, Column, CreateDateColumn, DeleteDateColumn, Entity, JoinC
 import { SHA256 } from 'crypto-js';
 import { User } from "../../users/entities";
 
-@Entity({ name: 'usr_passwords'})
+@Entity({ name: 'passwords'})
 export class Password{
 
     @PrimaryGeneratedColumn()
-    id_password:string;
+    passwordId:string;
 
     @ManyToOne(type => User, user => user.password)
-    @JoinColumn({ name: 'id_user' })
+    @JoinColumn({ name: 'userId' })
     user:User;
 
     @Column()

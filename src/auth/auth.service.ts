@@ -18,12 +18,12 @@ export class AuthService {
 
     async login(user:User):Promise<object>{
 
-        const { id_user, username, email } = user;
+        const { userId, username, role } = user;
 
         const payload = {
-            id_user,
-            username,
-            email
+            userId,
+            role,
+            username
         }
         
         const accessToken = this.jwtService.sign(payload);
@@ -32,6 +32,8 @@ export class AuthService {
             statusCode:201,
             message: "Login succesfully",
             data:{
+                userId,
+                username,
                 accessToken
             }
         }

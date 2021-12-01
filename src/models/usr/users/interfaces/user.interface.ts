@@ -1,5 +1,5 @@
 export interface UserI{
-    id_user?:number;
+    userId?:number;
     username?:string;
     email?:string;
 }

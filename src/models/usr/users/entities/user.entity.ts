@@ -3,40 +3,72 @@ import {
     CreateDateColumn, 
     DeleteDateColumn, 
     Entity, 
+    JoinColumn, 
+    ManyToOne, 
     OneToMany, 
+    OneToOne, 
     PrimaryGeneratedColumn, 
     UpdateDateColumn 
 } from "typeorm";
 import { Password } from "../../passwords/entities";
+import { Gender } from '../../../md/genders/entities/genders.entity';
+import { ScoreUser } from '../../score-users/entities/score-users.entity';
+import { PhysicalActivityUser } from '../../physical-activity-users/entities/physical-activity-users.entity';
 
-@Entity({ name: 'usr_users'})
+@Entity({ name: 'users'})
 export class User{
 
     @PrimaryGeneratedColumn()
-    id_user:number;
+    userId:number;
 
     @OneToMany(type => Password, password => password.user)
     password:Password[];
 
     @Column({
-        unique: true,
-        nullable:true
+        default:'student'
     })
-    email:string;
+    role:string;
 
     @Column({
         unique: true,
         nullable: true
     })
+    email:string;
+
+    @Column({
+        unique: true
+    })
     username:string;
 
+    @Column()
+    age:number;
+
+    @Column()
+    height:number;
+
+    @Column()
+    weight:number;
+
     @CreateDateColumn()
-    create_at:Date;
+    createAt:Date;
 
     @UpdateDateColumn()
-    update_at:Date;
+    updateAt:Date;
 
     @DeleteDateColumn()
-    delete_at:Date;
+    deleteAt:Date;
+
+    @ManyToOne( () => Gender, gender => gender.user )
+    @JoinColumn({name: 'genderId'})
+    gender:Gender;
+
+    @OneToMany( () => ScoreUser, su => su.user )
+    scoreUser:ScoreUser[];
+
+    @OneToMany( () => ScoreUser, su => su.player )
+    scorePlayer:ScoreUser[];
+
+    @OneToMany( () => PhysicalActivityUser, pau => pau.user )
+    physicalActivityUser:PhysicalActivityUser[];
 
 }
