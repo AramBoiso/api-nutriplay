@@ -20,18 +20,21 @@ export class ScoreUsersService {
         let playerQuery:string;
         let gameQuery:string;
 
-        if(playerId){
+        if(playerId && playerId > 0){
             playerQuery =  `p.userId = ${playerId}`;
         }
 
-        if(gameId){
+        if(gameId && gameId > 0){
             gameQuery = `g.gameId = ${gameId}`;
         }
 
         const scoreUsers = await this.connection
             .createQueryBuilder(ScoreUser, "su")
             .innerJoinAndSelect("su.player", "p", playerQuery)
+            // .select(['p.name'])
             .innerJoinAndSelect("su.game", "g", gameQuery)
+            .select(['su.score', 'p.username', 'g.name'])
+            .orderBy("su.score", "DESC")
             .getMany();
 
         return scoreUsers;

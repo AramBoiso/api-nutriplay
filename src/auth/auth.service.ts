@@ -34,6 +34,7 @@ export class AuthService {
             data:{
                 userId,
                 username,
+                role,
                 accessToken
             }
         }
